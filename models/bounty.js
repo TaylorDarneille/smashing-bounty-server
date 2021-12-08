@@ -1,20 +1,6 @@
 // import mongoose
 const mongoose = require('mongoose')
 
-// hunter schema
-let hunterSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    minlength: 1,
-    maxlength: 99
-  },
-  notoriety: {
-    type: String,
-    default: 'Unknown'
-  }
-})
-
 // Create a bounty schema
 let bountySchema = new mongoose.Schema({
     name: {
@@ -36,7 +22,6 @@ let bountySchema = new mongoose.Schema({
       type: Number,
       default: 100000
     },
-    hunters: [hunterSchema],
     captured: {
       type: Boolean,
       default: false

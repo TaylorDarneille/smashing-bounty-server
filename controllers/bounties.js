@@ -7,12 +7,12 @@ router.get('/', (req, res)=>{
   db.Bounty.find()
   .then(foundBounties=>{
     // console.log('BOUNTIES:', bounties)
-    res.send(foundBounties)
+    res.json(foundBounties)
   })
   .catch(err=>{
     console.log(err)
     // 503 Service Unavailable
-    res.status(503).send({message: 'Database asleep?'})
+    res.status(503).json({message: 'Database asleep?'})
   })
   // res.send('You\'ve hit the GET /bounties route!')
 })
@@ -24,11 +24,11 @@ router.get('/:id', (req, res)=>{
     if(foundBounty){
         res.send(foundBounty)
     } else {
-        res.status(404).send({message: 'Resource not located.'})
+        res.status(404).json({message: 'Resource not located.'})
     }
   }).catch(err=>{
     console.log(err)
-    res.status(503).send({message: 'Service Unavailable'})
+    res.status(503).json({message: 'Service Unavailable'})
   })
   // res.send('You\'ve hit the GET /bounties/:id route!')
 })
@@ -39,14 +39,14 @@ router.post('/', (req, res)=>{
   db.Bounty.create(req.body)
   .then(createdBounty=>{
     console.log(createdBounty)
-    res.status(201).send(createdBounty)
+    res.status(201).json(createdBounty)
   })
   .catch(err=>{
     console.log('Error while creating', err)
     if(err.name === 'ValidationError'){
-      res.status(406).send({message: 'Validation Error'})
+      res.status(406).json({message: 'Validation Error'})
     } else {
-      res.status(503).send({message:'Database or server error!'})
+      res.status(503).json({message:'Database or server error!'})
     }
   })
   // res.send('You\'ve hit the POST /bounties route!')
@@ -62,11 +62,11 @@ router.put('/:id', (req, res)=>{
     new: true
   })
   .then(updatedBounty=>{
-    res.send(updatedBounty)
+    res.json(updatedBounty)
   })
   .catch(err=>{
     console.log(err)
-    res.status(503).send({message: 'Server Error'})
+    res.status(503).json({message: 'Server Error'})
   })
   // res.send('You\'ve hit the PUT /bounties/:id route!')
 })
@@ -88,11 +88,11 @@ router.delete('/', (req, res)=>{
 router.delete('/:id', (req, res)=>{
   db.Bounty.findByIdAndDelete(req.params.id)
   .then(()=>{
-    res.status(204).send()
+    res.status(204).json({message: 'successfully deleted'})
   })
   .catch(err=>{
     console.log(err)
-    res.status(503).send({message: 'Server Error'})
+    res.status(503).json({message: 'Server Error'})
   })
   // res.send('You\'ve hit the DELETE /bounties/:id route!')
 })
